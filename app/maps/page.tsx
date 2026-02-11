@@ -178,6 +178,35 @@ export default function MapsPage() {
     }
   };
 
+  if (!process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY) {
+    return (
+      <div className="p-6 lg:p-8">
+        <Card className="max-w-2xl mx-auto p-8 border-2 border-yellow-200 bg-yellow-50">
+          <div className="flex gap-4">
+            <AlertCircle className="h-8 w-8 text-yellow-600 flex-shrink-0 mt-1" />
+            <div>
+              <h2 className="text-2xl font-bold text-yellow-900 mb-3">
+                Google Maps API Key Required
+              </h2>
+              <p className="text-yellow-800 mb-4">
+                The Maps feature requires a Google Maps API key to work. Here's how to add it:
+              </p>
+              <ol className="space-y-2 text-yellow-800 mb-6 list-decimal list-inside">
+                <li>Click the <strong>Vars</strong> tab in the left sidebar</li>
+                <li>Look for <code className="bg-yellow-100 px-2 py-1 rounded">NEXT_PUBLIC_GOOGLE_MAPS_API_KEY</code></li>
+                <li>Paste your Google Maps API key</li>
+                <li>Refresh this page</li>
+              </ol>
+              <p className="text-sm text-yellow-700 mb-4">
+                Don't have an API key? Get one from <a href="https://console.cloud.google.com/" target="_blank" rel="noopener noreferrer" className="underline font-semibold">Google Cloud Console</a>
+              </p>
+            </div>
+          </div>
+        </Card>
+      </div>
+    );
+  }
+
   if (loading) {
     return (
       <div className="p-6 flex items-center justify-center min-h-screen">
@@ -196,11 +225,9 @@ export default function MapsPage() {
           <AlertCircle className="h-5 w-5 text-red-600 flex-shrink-0 mt-0.5" />
           <div>
             <p className="font-medium text-red-900">{error}</p>
-            {!process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY && (
-              <p className="text-sm text-red-700 mt-1">
-                Please add your Google Maps API key to the environment variables.
-              </p>
-            )}
+            <p className="text-sm text-red-700 mt-1">
+              Make sure your API key has the necessary permissions and is restricted to your domain.
+            </p>
           </div>
         </div>
       )}

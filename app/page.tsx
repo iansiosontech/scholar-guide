@@ -22,7 +22,7 @@ export default function Page() {
           Welcome back, Scholar
         </h1>
         <p className="text-muted-foreground text-lg">
-          Manage your academic life all in one place
+          bading si dylan
         </p>
       </div>
 
