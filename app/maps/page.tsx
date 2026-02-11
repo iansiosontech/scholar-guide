@@ -37,33 +37,59 @@ export default function MapsPage() {
 
   // Load Google Maps script
   useEffect(() => {
+    // Check if script is already loaded
+    if (window.google && window.google.maps) {
+      console.log('[v0] Google Maps already loaded');
+      initializeMap();
+      return;
+    }
+
     const script = document.createElement('script');
     script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&libraries=places`;
     script.async = true;
-    script.defer = true;
+    script.defer = false;
+    
     script.onerror = () => {
-      setError('Failed to load Google Maps. Please check your API key.');
+      console.log('[v0] Failed to load Google Maps script');
+      setError('Failed to load Google Maps. Please check your API key and ensure Places API is enabled.');
       setLoading(false);
     };
+    
     script.onload = () => {
-      initializeMap();
+      console.log('[v0] Google Maps script loaded successfully');
+      setTimeout(() => {
+        initializeMap();
+      }, 100);
     };
+    
     document.head.appendChild(script);
 
     return () => {
-      document.head.removeChild(script);
+      try {
+        if (document.head.contains(script)) {
+          document.head.removeChild(script);
+        }
+      } catch (e) {
+        console.log('[v0] Error removing script:', e);
+      }
     };
   }, []);
 
   // Initialize map and get user location
   const initializeMap = () => {
-    if (!mapRef.current) return;
+    console.log('[v0] Initializing map...');
+    if (!mapRef.current) {
+      console.log('[v0] Map ref not available');
+      return;
+    }
 
     // Get user's current location
     if (navigator.geolocation) {
+      console.log('[v0] Requesting geolocation...');
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
+          console.log('[v0] Location obtained:', latitude, longitude);
           setUserLocation({ lat: latitude, lng: longitude });
 
           // Create map centered at user location
@@ -79,6 +105,7 @@ export default function MapsPage() {
             ],
           });
 
+          console.log('[v0] Map instance created');
           setMap(mapInstance);
 
           // Add user location marker
@@ -90,19 +117,22 @@ export default function MapsPage() {
           });
 
           userMarkerRef.current = userMarker;
+          console.log('[v0] User marker added');
 
           // Search for nearby places
           searchNearbyPlaces(mapInstance, latitude, longitude);
           setLoading(false);
         },
         (error) => {
+          console.log('[v0] Geolocation error:', error);
           setError(
-            'Unable to access your location. Please enable location services.'
+            `Unable to access your location. Error: ${error.message}. Please enable location services and try again.`
           );
           setLoading(false);
         }
       );
     } else {
+      console.log('[v0] Geolocation not supported');
       setError('Geolocation is not supported by your browser.');
       setLoading(false);
     }
@@ -114,6 +144,7 @@ export default function MapsPage() {
     lat: number,
     lng: number
   ) => {
+    console.log('[v0] Searching for nearby places...');
     const service = new google.maps.places.PlacesService(mapInstance);
 
     const request: google.maps.places.PlaceSearchRequest = {
@@ -123,6 +154,8 @@ export default function MapsPage() {
     };
 
     service.nearbySearch(request, (results, status) => {
+      console.log('[v0] Places search status:', status);
+      console.log('[v0] Places found:', results?.length || 0);
       if (
         status === google.maps.places.PlacesServiceStatus.OK &&
         results
