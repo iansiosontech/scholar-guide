@@ -10,6 +10,7 @@ import {
   CheckSquare,
   Menu,
   X,
+  MapPin,
 } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from './ui/button';
@@ -34,6 +35,11 @@ const navItems = [
     label: 'To-Do Lists',
     href: '/todos',
     icon: CheckSquare,
+  },
+  {
+    label: 'Maps',
+    href: '/maps',
+    icon: MapPin,
   },
 ];
 
