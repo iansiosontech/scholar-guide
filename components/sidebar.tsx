@@ -11,6 +11,7 @@ import {
   Menu,
   X,
   MapPin,
+  BookOpen,
 } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from './ui/button';
@@ -40,6 +41,11 @@ const navItems = [
     label: 'Maps',
     href: '/maps',
     icon: MapPin,
+  },
+  {
+    label: 'Grades',
+    href: '/grades',
+    icon: BookOpen,
   },
 ];
 
