@@ -10,8 +10,7 @@ import {
   CheckSquare,
   Menu,
   X,
-  MapPin,
-  BookOpen,
+  Sticky,
 } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from './ui/button';
@@ -38,14 +37,9 @@ const navItems = [
     icon: CheckSquare,
   },
   {
-    label: 'Maps',
-    href: '/maps',
-    icon: MapPin,
-  },
-  {
-    label: 'Grades',
-    href: '/grades',
-    icon: BookOpen,
+    label: 'Notes',
+    href: '/notes',
+    icon: Sticky,
   },
 ];
 
