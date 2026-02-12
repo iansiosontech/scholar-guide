@@ -102,19 +102,9 @@ export default function NotesPage() {
       </div>
 
       {/* Notes Container */}
-      <div className="relative w-full bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 rounded-lg border border-border overflow-visible p-8 mb-8" style={{ minHeight: '400px' }}>
-        {notes.length === 0 ? (
-          <div className="flex items-center justify-center h-96">
-            <div className="text-center">
-              <p className="text-muted-foreground mb-4">No notes yet</p>
-              <Button onClick={addNote} className="gap-2">
-                <Plus className="h-4 w-4" />
-                Create your first note
-              </Button>
-            </div>
-          </div>
-        ) : (
-          notes.map((note) => (
+      {notes.length > 0 && (
+        <div className="relative w-full bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 rounded-lg border border-border overflow-visible p-8 mb-8" style={{ minHeight: '300px' }}>
+          {notes.map((note) => (
             <DraggableNote
               key={note.id}
               note={note}
@@ -122,9 +112,19 @@ export default function NotesPage() {
               onDelete={deleteNote}
               onMove={moveNote}
             />
-          ))
-        )}
-      </div>
+          ))}
+        </div>
+      )}
+
+      {notes.length === 0 && (
+        <Card className="p-12 text-center mb-8 border-dashed">
+          <p className="text-muted-foreground mb-4">No notes yet</p>
+          <Button onClick={addNote} className="gap-2">
+            <Plus className="h-4 w-4" />
+            Create your first note
+          </Button>
+        </Card>
+      )}
 
       {/* Notes List Below */}
       {notes.length > 0 && (
