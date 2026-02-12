@@ -102,9 +102,9 @@ export default function NotesPage() {
       </div>
 
       {/* Notes Container */}
-      <div className="relative w-full h-screen max-h-[500px] lg:max-h-[600px] bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 rounded-lg border border-border overflow-hidden mb-8">
+      <div className="relative w-full bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 rounded-lg border border-border overflow-visible p-8 mb-8" style={{ minHeight: '400px' }}>
         {notes.length === 0 ? (
-          <div className="flex items-center justify-center h-full">
+          <div className="flex items-center justify-center h-96">
             <div className="text-center">
               <p className="text-muted-foreground mb-4">No notes yet</p>
               <Button onClick={addNote} className="gap-2">
@@ -203,6 +203,7 @@ function DraggableNote({
         left: `${note.x}px`,
         top: `${note.y}px`,
         cursor: isDragging ? 'grabbing' : 'grab',
+        zIndex: isDragging ? 50 : 10,
       }}
       className="w-48"
     >
