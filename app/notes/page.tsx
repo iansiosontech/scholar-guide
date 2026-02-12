@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { X, Plus, Trash2 } from 'lucide-react';
+import { useSidebar } from '@/context/sidebar-context';
 
 interface Note {
   id: string;
@@ -15,6 +16,7 @@ interface Note {
 }
 
 export default function NotesPage() {
+  const { isOpen } = useSidebar();
   const [notes, setNotes] = useState<Note[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -87,7 +89,7 @@ export default function NotesPage() {
   }
 
   return (
-    <div className="p-6 lg:p-8">
+    <div className="p-6 lg:p-8 lg:pl-0 transition-all duration-300" style={{ marginLeft: isOpen ? '256px' : '80px' }} data-testid="notes-container">
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="text-4xl font-bold mb-2">My Notes</h1>

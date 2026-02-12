@@ -12,7 +12,7 @@ import {
   X,
   StickyNote,
 } from 'lucide-react';
-import { useState } from 'react';
+import { useSidebar } from '@/context/sidebar-context';
 import { Button } from './ui/button';
 
 const navItems = [
@@ -45,7 +45,7 @@ const navItems = [
 
 export function Sidebar() {
   const pathname = usePathname();
-  const [isOpen, setIsOpen] = useState(true);
+  const { isOpen, setIsOpen } = useSidebar();
 
   return (
     <>
