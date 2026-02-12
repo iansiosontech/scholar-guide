@@ -10,7 +10,7 @@ import {
   CheckSquare,
   Menu,
   X,
-  Sticky,
+  StickyNote,
 } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from './ui/button';
@@ -39,7 +39,7 @@ const navItems = [
   {
     label: 'Notes',
     href: '/notes',
-    icon: Sticky,
+    icon: StickyNote,
   },
 ];
 
