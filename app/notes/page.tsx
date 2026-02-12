@@ -102,7 +102,7 @@ export default function NotesPage() {
       </div>
 
       {/* Notes Container */}
-      {notes.length > 0 && (
+      {notes.length > 0 ? (
         <div className="relative w-full bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 rounded-lg border border-border overflow-visible p-8 mb-8" style={{ minHeight: '300px' }}>
           {notes.map((note) => (
             <DraggableNote
@@ -114,9 +114,7 @@ export default function NotesPage() {
             />
           ))}
         </div>
-      )}
-
-      {notes.length === 0 && (
+      ) : (
         <Card className="p-12 text-center mb-8 border-dashed">
           <p className="text-muted-foreground mb-4">No notes yet</p>
           <Button onClick={addNote} className="gap-2">
