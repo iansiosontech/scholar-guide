@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import {
@@ -22,24 +22,8 @@ interface ScheduleItem {
 }
 
 export default function SchedulePage() {
-  const [currentDate, setCurrentDate] = useState(new Date(2024, 0, 1)); // Starting date
-  const [schedules, setSchedules] = useState<ScheduleItem[]>([
-    {
-      id: '1',
-      date: '2024-01-15',
-      title: 'Mathematics',
-      time: '10:00 AM',
-      location: 'Room 301',
-    },
-    {
-      id: '2',
-      date: '2024-01-15',
-      title: 'Physics',
-      time: '1:00 PM',
-      location: 'Lab B',
-    },
-  ]);
-
+  const [currentDate, setCurrentDate] = useState(new Date(2024, 0, 1));
+  const [schedules, setSchedules] = useState<ScheduleItem[]>([]);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState({
@@ -47,6 +31,58 @@ export default function SchedulePage() {
     time: '',
     location: '',
   });
+
+  // Load schedules from localStorage on mount
+  useEffect(() => {
+    const savedSchedules = localStorage.getItem('schedules');
+    if (savedSchedules) {
+      try {
+        setSchedules(JSON.parse(savedSchedules));
+      } catch (e) {
+        console.error('Failed to load schedules:', e);
+        // Set default schedules if loading fails
+        setSchedules([
+          {
+            id: '1',
+            date: '2024-01-15',
+            title: 'Mathematics',
+            time: '10:00 AM',
+            location: 'Room 301',
+          },
+          {
+            id: '2',
+            date: '2024-01-15',
+            title: 'Physics',
+            time: '1:00 PM',
+            location: 'Lab B',
+          },
+        ]);
+      }
+    } else {
+      // Set default schedules on first load
+      setSchedules([
+        {
+          id: '1',
+          date: '2024-01-15',
+          title: 'Mathematics',
+          time: '10:00 AM',
+          location: 'Room 301',
+        },
+        {
+          id: '2',
+          date: '2024-01-15',
+          title: 'Physics',
+          time: '1:00 PM',
+          location: 'Lab B',
+        },
+      ]);
+    }
+  }, []);
+
+  // Save schedules to localStorage whenever they change
+  useEffect(() => {
+    localStorage.setItem('schedules', JSON.stringify(schedules));
+  }, [schedules]);
 
   // Calendar generation
   const getDaysInMonth = (date: Date) => {
