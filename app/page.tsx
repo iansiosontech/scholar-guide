@@ -7,7 +7,6 @@ import {
   DollarSign,
   CheckSquare,
   ArrowRight,
-  TrendingUp,
   Clock,
 } from 'lucide-react';
 import Link from 'next/link';
@@ -22,12 +21,12 @@ export default function Page() {
           Welcome back, Scholar
         </h1>
         <p className="text-muted-foreground text-lg">
-          Manage your academic life all in one place
+          bading si dylan
         </p>
       </div>
 
       {/* Quick Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
         <Card className="p-6 border-l-4" style={{ borderLeftColor: 'hsl(var(--primary))' }}>
           <div className="flex items-start justify-between">
             <div>
@@ -85,24 +84,7 @@ export default function Page() {
           </div>
         </Card>
 
-        <Card className="p-6 border-l-4" style={{ borderLeftColor: 'hsl(var(--accent))' }}>
-          <div className="flex items-start justify-between">
-            <div>
-              <p className="text-sm font-medium text-muted-foreground mb-1">
-                Week Progress
-              </p>
-              <p className="text-3xl font-bold">65%</p>
-            </div>
-            <div
-              className="p-3 rounded-lg text-white"
-              style={{
-                backgroundColor: 'hsl(var(--accent))',
-              }}
-            >
-              <TrendingUp className="h-5 w-5" />
-            </div>
-          </div>
-        </Card>
+
       </div>
 
       {/* Main Content Sections */}
@@ -171,29 +153,36 @@ export default function Page() {
 
           <div className="space-y-3">
             {[
-              { task: 'Complete Math Assignment', completed: false },
-              { task: 'Read Chapter 5 - Physics', completed: true },
-              { task: 'Prepare Presentation', completed: false },
-              { task: 'Submit Essay', completed: true },
+              { task: 'Complete Math Assignment', completed: false, daysLeft: 2 },
+              { task: 'Read Chapter 5 - Physics', completed: true, daysLeft: 0 },
+              { task: 'Prepare Presentation', completed: false, daysLeft: 5 },
+              { task: 'Submit Essay', completed: true, daysLeft: 0 },
             ].map((item, i) => (
               <div
                 key={i}
-                className="flex items-center gap-3 p-3 rounded-lg hover:bg-secondary transition-colors"
+                className="flex items-start gap-3 p-3 rounded-lg hover:bg-secondary transition-colors"
               >
                 <input
                   type="checkbox"
                   defaultChecked={item.completed}
-                  className="w-4 h-4 rounded border-border cursor-pointer"
+                  className="w-4 h-4 rounded border-border cursor-pointer mt-1"
                 />
-                <span
-                  className={
-                    item.completed
-                      ? 'text-sm text-muted-foreground line-through'
-                      : 'text-sm font-medium'
-                  }
-                >
-                  {item.task}
-                </span>
+                <div className="flex-1 min-w-0">
+                  <span
+                    className={
+                      item.completed
+                        ? 'text-sm text-muted-foreground line-through'
+                        : 'text-sm font-medium'
+                    }
+                  >
+                    {item.task}
+                  </span>
+                  {!item.completed && item.daysLeft > 0 && (
+                    <p className="text-xs text-primary mt-1">
+                      {item.daysLeft === 1 ? 'Due tomorrow' : `${item.daysLeft} days left`}
+                    </p>
+                  )}
+                </div>
               </div>
             ))}
           </div>

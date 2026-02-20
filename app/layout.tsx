@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from 'next/font/google'
 
 import './globals.css'
 import { Sidebar } from '@/components/sidebar'
+import { SidebarProvider } from '@/context/sidebar-context'
 
 const _geist = Geist({ subsets: ['latin'] })
 const _geistMono = Geist_Mono({ subsets: ['latin'] })
@@ -22,10 +23,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="font-sans antialiased">
-        <Sidebar />
-        <main className="lg:pt-0 pt-16 min-h-screen">
-          {children}
-        </main>
+        <SidebarProvider>
+          <Sidebar />
+          <main className="lg:pt-0 pt-16 min-h-screen">
+            {children}
+          </main>
+        </SidebarProvider>
       </body>
     </html>
   )
